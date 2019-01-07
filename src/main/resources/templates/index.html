@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: htmlhead" th:with="title='后台管理'">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">pinocchio管理系统</div>
+<!--        &lt;!&ndash; 头部区域（可配合layui已有的水平导航） &ndash;&gt;
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item"><a href="">商品管理</a></li>
+            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>-->
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    [[${user.username}]]
+                </a>
+<!--                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>-->
+            </li>
+            <li class="layui-nav-item" ><a href="javascript:logout()">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            </ul>
+        </div>
+    </div>
+
+    <!-- 右侧tab选项卡和内容 -->
+    <div class="layui-body">
+        <!-- 动态选项卡 -->
+        <div id="tabzu" class="layui-tab layui-tab-brief layui-tab-brief" lay-filter="tabDemo" lay-allowclose="true">
+            <ul class="layui-tab-title">
+                <li class="layui-this " id="sy">
+                    <i class="layui-icon layui-icon-home">首页</i>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <iframe src="main" frameborder="0" class="layadmin-iframe" height="500px" width="100%" ></iframe>
+                </div>
+            </div>
+
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script type="text/javascript" src="/pinocchio-admin/js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: htmlhead" th:with="title='部门管理'">
+	<style type="text/css">
+		body{padding: 10px 30px;}
+		.hide{display:none}
+	</style>
+</head>
+
+<body>
+<!--<blockquote class="layui-elem-quote">所有监听数据请打开控制台查看</blockquote>-->
+
+<button class="layui-btn layui-btn-primary up-all">全部收起</button>
+<button class="layui-btn layui-btn-primary down-all">全部展开</button>
+<button class="layui-btn" id="addBtn">新增</button>
+
+<table class="layui-table layui-form" id="test-tree-table"></table>
+<script src="/pinocchio-admin/js/sys/menu.js"></script>
+
+</body>
+
+</html>

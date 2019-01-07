@@ -1,0 +1,37 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 8080
+  servlet:
+    context-path: /pinocchio-admin
+
+spring:
+  thymeleaf:
+    cache: false
+  profiles:
+    active: dev
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy/MM/dd HH:mm:ss
+
+pagehelper:
+  supportMethodsArguments: true
+  reasonable: true
+  helperDialect: mysql
+  params: count=countSql
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.pinocchio.security.model
+mapper:
+  identity: MYSQL
+  not-empty: false
+  mappers: com.pinocchio.security.util.MyMapper
+
+logging:
+  config: src/main/resources/log4j2.xml

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: htmlhead" th:with="title='部门管理'">
+</head>
+
+<body>
+    <table class="layui-table layui-form" id="test-tree-table"></table>
+    <input type="hidden" id="menuIds">
+</body>
+<script>
+    layui.config({
+        base: '/pinocchio-admin/js/',
+    })
+    layui.use(['treetable','form'],function(){
+        var o = layui.$,treetable = layui.treetable;
+        var form = layui.form,layer = layui.layer;
+        var a = 100;
+        var menu;
+        var roleMenu;
+        treetableInit();
+        function treetableInit() {
+            //获取菜单资源
+            $.ajax({
+                url: "/pinocchio-admin/sys/menu/list",
+                method: 'POST',
+                async: false,
+                success: function (results) {
+                    menu = results;
+                }
+            });
+            $.ajax({
+                url: "/pinocchio-admin/sys/menu/roleMenuList",
+                method: 'POST',
+                data:{"roleId":[[${roleId}]]},
+                async: false,
+                success: function (results) {
+                    roleMenu = results;
+                }
+            });
+            treetable.render({
+                elem: '#test-tree-table',
+                data: menu,
+                field: 'name',
+                is_checkbox: true,
+                cols: [
+                    {
+                        field: 'name',
+                        title: '标题',
+                        width: '90%',
+                    },
+                ]
+            });
+            //将已有的权限进行添加
+            if (roleMenu.length!=0){
+                $('.layui-table tr[data-id=' + 0 + '] td .layui-form-checkbox').trigger("click");
+                for (var j = 0; j < menu.length; j++) {
+                    var x=0;
+                    for (var i = 0; i < roleMenu.length; i++) {
+                        if (menu[j].id ==roleMenu[i].menuId){
+                            x = 1;
+                        }
+                    }
+                    if (x == 0){
+                        $('.layui-table tr[data-id=' + menu[j].id + '] td .layui-form-checkbox').trigger("click");
+                    }
+                }
+            }
+
+            var ids =treetable.all('checked').ids;
+            $("#menuIds").val(ids);
+        }
+    })
+
+
+</script>
+
+</body>
+
+</html>

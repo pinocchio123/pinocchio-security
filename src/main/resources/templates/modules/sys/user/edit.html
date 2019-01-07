@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: htmlhead" th:with="title='用户列表'">
+</head>
+<style type="text/css">
+    .downpanel .layui-select-title span {
+        line-height: 38px;
+    }
+
+    /*继承父类颜色*/
+    .downpanel dl dd:hover {
+        background-color: inherit;
+    }
+    body {
+        height: 100%;
+        width: 100%;
+        background-size: cover;
+        margin: 0 auto;
+    }
+    td {
+        font-size: 12px !important;
+    }
+
+    .layui-form-checkbox span {
+        height: 30px;
+    }
+    .layui-field-title {
+        border-top: 1px solid white;
+    }
+    table {
+        width: 100% !important;
+    }
+</style>
+
+
+<body>
+<form class="layui-form" action="" style="margin-top: 20px" id="formData">
+    <input type="hidden" name="userId"  required  lay-verify="required"  th:value="${user.userId}">
+    <input th:if="${flag == 'update'}" type="hidden" name="salt"  required  lay-verify="required"  th:value="${user.salt}">
+    <input th:if="${flag == 'update'}" type="hidden" name="password"  required  lay-verify="required"  th:value="${user.password}">
+    <input th:if="${flag == 'update'}" type="hidden" name="createTime"  required  lay-verify="required"  th:value="${user.createTime}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-block">
+            <input type="text" name="username"  required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input" style="width: 70%" th:value="${user.username}">
+        </div>
+    </div>
+
+    <div class="layui-form-item" th:if="${flag == 'add'}">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-block">
+            <input  type="password" name="password"  required  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input" style="width: 70%" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+            <input type="email" name="email"  required  lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input" style="width: 70%" th:value="${user.email}">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机</label>
+        <div class="layui-input-block">
+            <input type="mobile" name="mobile" required  lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input" style="width: 70%" th:value="${user.mobile}">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门</label>
+        <div class="layui-input-inline">
+            <div class="layui-unselect layui-form-select downpanel">
+                <div class="layui-select-title">
+                    <span class="layui-input layui-unselect" id="treeclass" name="treeclass">选择部门</span>
+                    <input type="hidden" name="deptId" id="deptId">
+                    <i class="layui-edge"></i>
+                </div>
+                <dl class="layui-anim layui-anim-upbit">
+                    <dd>
+                        <ul id="classtree"></ul>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色</label>
+        <div class="layui-input-block">
+                <input th:each="role:${roleList}" type="checkbox" name="roleId" th:title="${role.roleName}" th:value="${role.roleId}" lay-skin="primary" >
+        </div>
+    </div>
+</form>
+<script>
+    layui.use(['element', 'tree', 'layer', 'form', 'upload'], function () {
+        var form = layui.form;
+        var $ = layui.jquery, tree = layui.tree;
+        if('[[${user.deptName}]]' != ''){
+            document.getElementById('treeclass').innerText = '[[${user.deptName}]]';
+        }
+        $("#deptId").val([[${user.deptId}]]);
+        var array = [[${roleIdList}]];
+        var groupCheckbox = $("input[name='roleId']");
+        for (var i=0;i<array.length;i++){
+            for (var j=0;j<groupCheckbox.length;j++){
+                if (array[i] == groupCheckbox[j].value){
+                    groupCheckbox[j].checked='checked';
+                }
+            }
+        }
+        form.render();
+        $.get("/pinocchio-admin/sys/dept/list",function(data){
+            tree({
+                elem: "#classtree"
+                ,
+                nodes: data
+                ,
+                click: function (node) {
+                    var $select = $($(this)[0].elem).parents(".layui-form-select");
+                    $select.removeClass("layui-form-selected").find(".layui-select-title span").html(node.name).end().find("input:hidden[name='deptId']").val(node.id);
+                }
+            });
+        });
+
+
+        $(".downpanel").on("click", ".layui-select-title", function (e) {
+            $(".layui-form-select").not($(this).parents(".layui-form-select")).removeClass("layui-form-selected");
+            $(this).parents(".downpanel").toggleClass("layui-form-selected");
+            layui.stope(e);
+        }).on("click", "dl i", function (e) {
+            layui.stope(e);
+        });
+        $(document).on("click", function (e) {
+            $(".layui-form-select").removeClass("layui-form-selected");
+        });
+
+    });
+
+</script>
+</body>
+</html>
