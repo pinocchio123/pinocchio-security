@@ -48,6 +48,7 @@ public class ShiroConfig {
         sessionManager.setGlobalSessionTimeout(60 * 60 * 1000);
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionIdUrlRewritingEnabled(false);
+        System.out.println("++++++++++++");
         return sessionManager;
     }
 
