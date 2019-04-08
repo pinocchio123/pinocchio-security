@@ -35,3 +35,31 @@ mapper:
 
 logging:
   config: src/main/resources/log4j2.xml
+
+kafka:
+    consumer:
+        auto:
+            commit:
+                interval: 100
+            offset:
+                reset: latest
+        concurrency: 10
+        enable:
+            auto:
+                commit: false
+        group:
+            id: test
+        servers: 192.168.2.184:9092
+        session:
+            timeout: 6000
+        topic: test
+        zookeeper:
+            connect: 192.168.2.184:2181
+    producer:
+        batch:
+            size: 4096
+        buffer:
+            memory: 40960
+        linger: 1
+        retries: 0
+        servers: 192.168.2.184:9092

@@ -39,10 +39,18 @@
             /> -->
         <Logger name="org.springframework" level="WARN" />
         <Logger name="com.pinocchio.security" level="DEBUG" />
+        <Logger name="org.apache.kafka" level="OFF"/>
+        <Logger name="org.springframework.kafka.listener.KafkaMessageListenerContainer" level="OFF"/>
         <Root level="DEBUG">
             <AppenderRef ref="console"></AppenderRef>
             <AppenderRef ref="error"></AppenderRef>
             <AppenderRef ref="rollingFile"></AppenderRef>
         </Root>
     </Loggers>
+
+
+
+
+
+
 </configuration>
