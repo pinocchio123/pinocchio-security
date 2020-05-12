@@ -18,25 +18,26 @@ package com.pinocchio.security.util;
 
 /**
  * 常量
- *
- * @author Mark sunlightcs@gmail.com
- * @since 1.0.0 2016-11-15
  */
 public class Constant {
-	/** 超级管理员ID */
-	public static final int SUPER_ADMIN = 1;
-    /** 数据权限过滤 */
-	public static final String SQL_FILTER = "sql_filter";
+    /**
+     * 超级管理员ID
+     */
+    public static final int SUPER_ADMIN = 1;
+    /**
+     * 数据权限过滤
+     */
+    public static final String SQL_FILTER = "sql_filter";
 
 
-	/**
-	 * 菜单类型
-	 */
+    /**
+     * 菜单类型
+     */
     public enum MenuType {
         /**
          * 目录
          */
-    	CATALOG(0),
+        CATALOG(0),
         /**
          * 菜单
          */
@@ -56,7 +57,7 @@ public class Constant {
             return value;
         }
     }
-    
+
     /**
      * 定时任务状态
      */
@@ -64,18 +65,18 @@ public class Constant {
         /**
          * 正常
          */
-    	NORMAL(0),
+        NORMAL(0),
         /**
          * 暂停
          */
-    	PAUSE(1);
+        PAUSE(1);
 
         private int value;
 
         ScheduleStatus(int value) {
             this.value = value;
         }
-        
+
         public int getValue() {
             return value;
         }

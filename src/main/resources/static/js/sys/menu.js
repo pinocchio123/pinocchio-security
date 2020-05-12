@@ -1,14 +1,14 @@
 layui.config({
     base: '/pinocchio-admin/js/',
 })
-layui.use(['treetable','form'],function(){
-    var o = layui.$,treetable = layui.treetable;
-    var form = layui.form,layer = layui.layer;
+layui.use(['treetable', 'form'], function () {
+    var o = layui.$, treetable = layui.treetable;
+    var form = layui.form, layer = layui.layer;
     $.ajax({
-        type:"GET",
-        url:"menuTreeList",
-        dataType:"json",
-        success:function(res){
+        type: "GET",
+        url: "menuTreeList",
+        dataType: "json",
+        success: function (res) {
             treetable.render({
                 elem: '#test-tree-table',
                 data: res.data,
@@ -40,12 +40,12 @@ layui.use(['treetable','form'],function(){
                         field: 'type',
                         title: '类型',
                         width: '20%',
-                        template: function(item){
-                            if (item.type == 1){
+                        template: function (item) {
+                            if (item.type == 1) {
                                 return "菜单";
-                            }else if (item.type == 2){
+                            } else if (item.type == 2) {
                                 return "按钮";
-                            }else if (item.type == 0){
+                            } else if (item.type == 0) {
                                 return "根菜单";
                             }
                         }
@@ -54,7 +54,7 @@ layui.use(['treetable','form'],function(){
                         field: 'actions',
                         title: '操作',
                         width: '30%',
-                        template: function(item){
+                        template: function (item) {
                             var tem = [];
                             tem.push('<a class="layui-btn layui-btn-xs" lay-filter="edit">编辑</a>\n' +
                                 '\t<a class="layui-btn layui-btn-xs layui-btn-danger" lay-filter="del">删除</a>')
@@ -67,24 +67,24 @@ layui.use(['treetable','form'],function(){
     });
 
 
-    treetable.on('treetable(del)',function(res){
+    treetable.on('treetable(del)', function (res) {
         layer.config({
             anim: 5, //默认动画风格
             skin: 'layui-layer-molv' //默认皮肤
         });
-        layer.confirm('确定删除该条记录吗？', function(index){
+        layer.confirm('确定删除该条记录吗？', function (index) {
             $.ajax({
-                type:"POST",
-                url:"delete",
-                data:{"id":res.item.id},
-                dataType:"json",
-                success:function(data){
+                type: "POST",
+                url: "delete",
+                data: {"id": res.item.id},
+                dataType: "json",
+                success: function (data) {
                     layer.msg(data.msg);
-                    if (data.code == '200'){
+                    if (data.code == '200') {
                         location.reload();
                     }
                 },
-                error:function(){
+                error: function () {
                     layer.msg("出现错误");
                     return false;
                 }
@@ -92,19 +92,19 @@ layui.use(['treetable','form'],function(){
         });
     })
 
-    treetable.on('treetable(edit)',function(res){
+    treetable.on('treetable(edit)', function (res) {
         editMenu(res.item.id);
     })
 
-    o('.up-all').click(function(){
+    o('.up-all').click(function () {
         treetable.all('up');
     })
 
-    o('.down-all').click(function(){
+    o('.down-all').click(function () {
         treetable.all('down');
     })
 
-    o('.get-checked').click(function(){
+    o('.get-checked').click(function () {
         console.dir(treetable.all('checked'));
     })
 
@@ -112,38 +112,38 @@ layui.use(['treetable','form'],function(){
         editMenu(-1);
     })
 
-    form.on('switch(status)',function(data){
+    form.on('switch(status)', function (data) {
         layer.msg('监听状态操作');
         console.dir(data);
     })
 
-    function editMenu(id){
+    function editMenu(id) {
         layer.open({
             type: 2//这就是定义窗口类型的属性
-            ,title:"编辑"
-            ,shadeClose: true
-            ,shade: 0.3
-            ,offset: 'auto'
-            ,skin: 'layui-layer-molv'
-            ,area: ['700px', '500px']
-            ,btn:  ['确定', '取消']
-            ,content:"edit?menuId="+ id   //实际开发中传入真实iframe地址
-            ,yes: function(index, layero){
+            , title: "编辑"
+            , shadeClose: true
+            , shade: 0.3
+            , offset: 'auto'
+            , skin: 'layui-layer-molv'
+            , area: ['700px', '500px']
+            , btn: ['确定', '取消']
+            , content: "edit?menuId=" + id   //实际开发中传入真实iframe地址
+            , yes: function (index, layero) {
                 var body = layer.getChildFrame('body', index);
                 var paraFormData = body.find("#formData").serialize();
                 $.ajax({
-                    type:"POST",
-                    url:"save",
-                    data:paraFormData,
-                    dataType:"json",
-                    success:function(data){
+                    type: "POST",
+                    url: "save",
+                    data: paraFormData,
+                    dataType: "json",
+                    success: function (data) {
                         layer.msg(data.msg);
-                        if (data.code == '200'){
+                        if (data.code == '200') {
                             location.reload();
                             layer.close(index); //关闭弹层
                         }
                     },
-                    error:function(){
+                    error: function () {
                         layer.msg("出现错误");
                         return false;
                     }

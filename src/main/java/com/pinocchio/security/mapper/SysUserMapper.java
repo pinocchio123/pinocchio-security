@@ -3,6 +3,7 @@ package com.pinocchio.security.mapper;
 import com.pinocchio.security.model.SysUser;
 import com.pinocchio.security.model.UserVo;
 import com.pinocchio.security.util.MyMapper;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 

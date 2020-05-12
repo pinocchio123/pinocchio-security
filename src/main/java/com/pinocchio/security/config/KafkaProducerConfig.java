@@ -13,8 +13,9 @@ import org.springframework.kafka.core.ProducerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
 @Configuration
-@EnableKafka
+@EnableKafka*/
 public class KafkaProducerConfig {
     @Value("${kafka.producer.servers}")
     private String servers;
@@ -24,8 +25,9 @@ public class KafkaProducerConfig {
     private int batchSize;
     @Value("${kafka.producer.linger}")
     private int linger;
-    @Value("${kafka.producer.buffer.memory}")
     private int bufferMemory;
+
+    @Value("${kafka.producer.buffer.memory}")
 
 
     public Map<String, Object> producerConfigs() {

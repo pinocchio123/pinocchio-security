@@ -11,12 +11,14 @@
     .downpanel dl dd:hover {
         background-color: inherit;
     }
+
     body {
         height: 100%;
         width: 100%;
         background-size: cover;
         margin: 0 auto;
     }
+
     td {
         font-size: 12px !important;
     }
@@ -24,9 +26,11 @@
     .layui-form-checkbox span {
         height: 30px;
     }
+
     .layui-field-title {
         border-top: 1px solid white;
     }
+
     table {
         width: 100% !important;
     }
@@ -35,12 +39,13 @@
 
 <body>
 <form class="layui-form" action="" style="margin-top: 20px" id="formData">
-    <input type="hidden" name="id"  required  lay-verify="required"  th:value="${dept.id}">
+    <input type="hidden" name="id" required lay-verify="required" th:value="${dept.id}">
 
     <div class="layui-form-item">
         <label class="layui-form-label">部门名称</label>
         <div class="layui-input-block">
-            <input type="text" name="name"  required  lay-verify="required" placeholder="请输入部门名称" autocomplete="off" class="layui-input" style="width: 70%" th:value="${dept.name}">
+            <input type="text" name="name" required lay-verify="required" placeholder="请输入部门名称" autocomplete="off"
+                   class="layui-input" style="width: 70%" th:value="${dept.name}">
         </div>
     </div>
 
@@ -67,12 +72,12 @@
     layui.use(['element', 'tree', 'layer', 'form', 'upload'], function () {
         var form = layui.form;
         var $ = layui.jquery, tree = layui.tree;
-        if('[[${dept.parentName}]]' != ''){
+        if ('[[${dept.parentName}]]' != '') {
             document.getElementById('treeclass').innerText = '[[${dept.parentName}]]';
         }
         $("#pid").val([[${dept.pid}]]);
         form.render();
-        $.get("/pinocchio-admin/sys/dept/list",function(data){
+        $.get("/pinocchio-admin/sys/dept/list", function (data) {
             tree({
                 elem: "#classtree"
                 ,

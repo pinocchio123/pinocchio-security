@@ -38,7 +38,7 @@ import java.util.List;
 
 /**
  * 部门管理
- * 
+ *
  * @author chenshun
  * @email sunlightcs@gmail.com
  * @date 2017-06-20 15:23:47
@@ -46,90 +46,91 @@ import java.util.List;
 @RestController
 @RequestMapping("/sys/menu")
 public class SysMenuController {
-	private static final Logger logger = LoggerFactory
-			.getLogger(SysUserController.class);
-	@Autowired
-	private SysMenuMapper sysMenuMapper;
-	@Autowired
-	private SysMenuService sysMenuService;
-	@Autowired
-	private SysRoleMenuMapper roleMenuMapper;
-	@RequestMapping("/index")
-	public ModelAndView index(Model model){
-		ModelAndView mv = new ModelAndView("modules/sys/menu/index");
-		ShiroTag shiroTag = new ShiroTag();
-		model.addAttribute("shiro", shiroTag);
-		mv.addObject(model);
-		return mv;
-	}
+    private static final Logger logger = LoggerFactory
+            .getLogger(SysUserController.class);
+    @Autowired
+    private SysMenuMapper sysMenuMapper;
+    @Autowired
+    private SysMenuService sysMenuService;
+    @Autowired
+    private SysRoleMenuMapper roleMenuMapper;
 
-	@RequestMapping("/menuTreeList")
-	public R menuTreeList(){
-		List<SysMenu> menuList = sysMenuMapper.selectAll();
-		R r = R.ok().put("count", menuList.size());
-		r.put("data", menuList);
-		r.put("code", 0);
-		r.put("msg", "请求成功");
-		return r;
-	}
+    @RequestMapping("/index")
+    public ModelAndView index(Model model) {
+        ModelAndView mv = new ModelAndView("modules/sys/menu/index");
+        ShiroTag shiroTag = new ShiroTag();
+        model.addAttribute("shiro", shiroTag);
+        mv.addObject(model);
+        return mv;
+    }
 
-	/**
-	 * 列表
-	 */
-	@RequestMapping("/list")
-	public List<SysMenu> list(){
-		List<SysMenu> menuList = sysMenuMapper.selectAll();
-		return menuList;
-	}
+    @RequestMapping("/menuTreeList")
+    public R menuTreeList() {
+        List<SysMenu> menuList = sysMenuMapper.selectAll();
+        R r = R.ok().put("count", menuList.size());
+        r.put("data", menuList);
+        r.put("code", 0);
+        r.put("msg", "请求成功");
+        return r;
+    }
 
-	@RequestMapping("/listTree")
-	public List<MenuVo> listTree(){
-		List<MenuVo> menuList = sysMenuService.getUserMenuList(1L);
-		return menuList;
-	}
+    /**
+     * 列表
+     */
+    @RequestMapping("/list")
+    public List<SysMenu> list() {
+        List<SysMenu> menuList = sysMenuMapper.selectAll();
+        return menuList;
+    }
 
-	@RequestMapping("/roleMenuList")
-	public List<SysRoleMenu> roleMenuList(Long roleId){
-		SysRoleMenu sysRoleMenu = new SysRoleMenu();
-		List<SysRoleMenu> roleMenuList = roleMenuMapper.selectAll();
-		return roleMenuList;
-	}
+    @RequestMapping("/listTree")
+    public List<MenuVo> listTree() {
+        List<MenuVo> menuList = sysMenuService.getUserMenuList(1L);
+        return menuList;
+    }
 
-
-	@RequestMapping("/edit")
-	public ModelAndView edit(Model model,Long menuId){
-		logger.debug("menuId="+menuId);
-		ModelAndView mv = new ModelAndView("modules/sys/menu/edit");
-		if (menuId != -1){
-			MenuVo menu  = sysMenuMapper.findById(menuId);
-			model.addAttribute("menu", menu);
-			model.addAttribute("flag", "update");
-		}else{
-			model.addAttribute("menu", new MenuVo());
-			model.addAttribute("flag", "add");
-		}
-		return mv;
-	}
+    @RequestMapping("/roleMenuList")
+    public List<SysRoleMenu> roleMenuList(Long roleId) {
+        SysRoleMenu sysRoleMenu = new SysRoleMenu();
+        List<SysRoleMenu> roleMenuList = roleMenuMapper.selectAll();
+        return roleMenuList;
+    }
 
 
-	@RequestMapping("/save")
-	@RequiresPermissions("sys:menu:save")
-	public R save(SysMenu menu){
-		if (menu.getId() != null && !menu.getId().equals("")) {
-			sysMenuMapper.updateByPrimaryKey(menu);
-		} else {
-			sysMenuMapper.insert(menu);
-		}
-		return R.ok();
-	}
+    @RequestMapping("/edit")
+    public ModelAndView edit(Model model, Long menuId) {
+        logger.debug("menuId=" + menuId);
+        ModelAndView mv = new ModelAndView("modules/sys/menu/edit");
+        if (menuId != -1) {
+            MenuVo menu = sysMenuMapper.findById(menuId);
+            model.addAttribute("menu", menu);
+            model.addAttribute("flag", "update");
+        } else {
+            model.addAttribute("menu", new MenuVo());
+            model.addAttribute("flag", "add");
+        }
+        return mv;
+    }
 
-	@RequestMapping("/delete")
-	@RequiresPermissions("sys:menu:delete")
-	public R delete(SysMenu menu){
-		SysMenu sysMenu = new SysMenu();
-		sysMenu.setPid(menu.getId());
-		sysMenuMapper.delete(sysMenu);
-		sysMenuMapper.delete(menu);
-		return R.ok();
-	}
+
+    @RequestMapping("/save")
+    @RequiresPermissions("sys:menu:save")
+    public R save(SysMenu menu) {
+        if (menu.getId() != null && !menu.getId().equals("")) {
+            sysMenuMapper.updateByPrimaryKey(menu);
+        } else {
+            sysMenuMapper.insert(menu);
+        }
+        return R.ok();
+    }
+
+    @RequestMapping("/delete")
+    @RequiresPermissions("sys:menu:delete")
+    public R delete(SysMenu menu) {
+        SysMenu sysMenu = new SysMenu();
+        sysMenu.setPid(menu.getId());
+        sysMenuMapper.delete(sysMenu);
+        sysMenuMapper.delete(menu);
+        return R.ok();
+    }
 }

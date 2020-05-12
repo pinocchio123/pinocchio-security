@@ -7,10 +7,11 @@ import com.pinocchio.security.util.MyMapper;
 import java.util.List;
 
 
-public interface SysMenuMapper extends MyMapper<SysMenu>{
+public interface SysMenuMapper extends MyMapper<SysMenu> {
 
     /**
      * 根据父菜单，查询子菜单
+     *
      * @param parentId 父菜单ID
      */
     List<MenuVo> queryListParentId(Long parentId);

@@ -4,20 +4,21 @@
 </head>
 
 <body>
-    <table class="layui-table layui-form" id="test-tree-table"></table>
-    <input type="hidden" id="menuIds">
+<table class="layui-table layui-form" id="test-tree-table"></table>
+<input type="hidden" id="menuIds">
 </body>
 <script>
     layui.config({
         base: '/pinocchio-admin/js/',
     })
-    layui.use(['treetable','form'],function(){
-        var o = layui.$,treetable = layui.treetable;
-        var form = layui.form,layer = layui.layer;
+    layui.use(['treetable', 'form'], function () {
+        var o = layui.$, treetable = layui.treetable;
+        var form = layui.form, layer = layui.layer;
         var a = 100;
         var menu;
         var roleMenu;
         treetableInit();
+
         function treetableInit() {
             //获取菜单资源
             $.ajax({
@@ -31,7 +32,7 @@
             $.ajax({
                 url: "/pinocchio-admin/sys/menu/roleMenuList",
                 method: 'POST',
-                data:{"roleId":[[${roleId}]]},
+                data: {"roleId": [[${roleId}]]},
                 async: false,
                 success: function (results) {
                     roleMenu = results;
@@ -51,22 +52,22 @@
                 ]
             });
             //将已有的权限进行添加
-            if (roleMenu.length!=0){
+            if (roleMenu.length != 0) {
                 $('.layui-table tr[data-id=' + 0 + '] td .layui-form-checkbox').trigger("click");
                 for (var j = 0; j < menu.length; j++) {
-                    var x=0;
+                    var x = 0;
                     for (var i = 0; i < roleMenu.length; i++) {
-                        if (menu[j].id ==roleMenu[i].menuId){
+                        if (menu[j].id == roleMenu[i].menuId) {
                             x = 1;
                         }
                     }
-                    if (x == 0){
+                    if (x == 0) {
                         $('.layui-table tr[data-id=' + menu[j].id + '] td .layui-form-checkbox').trigger("click");
                     }
                 }
             }
 
-            var ids =treetable.all('checked').ids;
+            var ids = treetable.all('checked').ids;
             $("#menuIds").val(ids);
         }
     })

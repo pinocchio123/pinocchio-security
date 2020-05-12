@@ -2,28 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.pinocchio.security.mapper.SysDeptMapper">
-	<resultMap id="BaseResultMap" type="com.pinocchio.security.model.DeptVo" >
-		<id column="id" property="id" jdbcType="BIGINT" />
-		<result column="pid" property="pid" jdbcType="BIGINT" />
-		<result column="name" property="name" jdbcType="VARCHAR" />
-		<result column="order_num" property="orderNum" jdbcType="INTEGER" />
-		<result column="del_flag" property="delFlag" jdbcType="TINYINT" />
-		<result column="parent_name" property="parentName" jdbcType="VARCHAR" />
-	</resultMap>
+    <resultMap id="BaseResultMap" type="com.pinocchio.security.model.DeptVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="pid" property="pid" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="order_num" property="orderNum" jdbcType="INTEGER"/>
+        <result column="del_flag" property="delFlag" jdbcType="TINYINT"/>
+        <result column="parent_name" property="parentName" jdbcType="VARCHAR"/>
+    </resultMap>
 
-	<select id="queryListParentId" resultMap="BaseResultMap">
-		select n.id,n.pid,n.name,m.name AS parent_name from sys_dept n
-		LEFT JOIN sys_dept m ON n.pid = m.id
-		where n.pid = #{pid}
-	</select>
+    <select id="queryListParentId" resultMap="BaseResultMap">
+        select n.id,n.pid,n.name,m.name AS parent_name from sys_dept n
+        LEFT JOIN sys_dept m ON n.pid = m.id
+        where n.pid = #{pid}
+    </select>
 
-	<select id="queryDetpIdList" resultType="long">
-		select id from sys_dept where pid = #{value} and del_flag = 0
-	</select>
+    <select id="queryDetpIdList" resultType="long">
+        select id from sys_dept where pid = #{value} and del_flag = 0
+    </select>
 
-	<select id="findById" resultMap="BaseResultMap">
-		select n.id,n.pid,n.name,m.name AS parent_name from sys_dept n
-		LEFT JOIN sys_dept m ON n.pid = m.id
-		where n.id = #{id}
-	</select>
+    <select id="findById" resultMap="BaseResultMap">
+        select n.id,n.pid,n.name,m.name AS parent_name from sys_dept n
+        LEFT JOIN sys_dept m ON n.pid = m.id
+        where n.id = #{id}
+    </select>
 </mapper>

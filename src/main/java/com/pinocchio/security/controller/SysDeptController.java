@@ -46,7 +46,7 @@ import java.util.List;
 
 /**
  * 部门管理
- * 
+ *
  * @author chenshun
  * @email sunlightcs@gmail.com
  * @date 2017-06-20 15:23:47
@@ -54,73 +54,74 @@ import java.util.List;
 @RestController
 @RequestMapping("/sys/dept")
 public class SysDeptController {
-	private static final Logger logger = LoggerFactory
-			.getLogger(SysUserController.class);
-	@Autowired
-	private SysDeptMapper sysDeptMapper;
-	@Autowired
-	private SysDeptService sysDeptService;
+    private static final Logger logger = LoggerFactory
+            .getLogger(SysUserController.class);
+    @Autowired
+    private SysDeptMapper sysDeptMapper;
+    @Autowired
+    private SysDeptService sysDeptService;
 
-	@RequestMapping("/index")
-	public ModelAndView index(Model model){
-		ModelAndView mv = new ModelAndView("modules/sys/dept/index");
-		ShiroTag shiroTag = new ShiroTag();
-		model.addAttribute("shiro", shiroTag);
-		mv.addObject(model);
-		return mv;
-	}
-	/**
-	 * 列表
-	 */
-	@RequestMapping("/list")
-	public List<DeptVo> list(){
-		List<DeptVo> deptList = sysDeptService.getAllDeptList();
-		return deptList;
-	}
+    @RequestMapping("/index")
+    public ModelAndView index(Model model) {
+        ModelAndView mv = new ModelAndView("modules/sys/dept/index");
+        ShiroTag shiroTag = new ShiroTag();
+        model.addAttribute("shiro", shiroTag);
+        mv.addObject(model);
+        return mv;
+    }
 
-	@RequestMapping("/edit")
-	public ModelAndView edit(Model model,Long deptId){
-		logger.debug("deptId="+deptId);
-		ModelAndView mv = new ModelAndView("modules/sys/dept/edit");
-		if (deptId != -1){
-			DeptVo dept  = sysDeptMapper.findById(deptId);
-			model.addAttribute("dept", dept);
-			model.addAttribute("flag", "update");
-		}else{
-			model.addAttribute("dept", new DeptVo());
-			model.addAttribute("flag", "add");
-		}
-		return mv;
-	}
+    /**
+     * 列表
+     */
+    @RequestMapping("/list")
+    public List<DeptVo> list() {
+        List<DeptVo> deptList = sysDeptService.getAllDeptList();
+        return deptList;
+    }
 
-	@RequestMapping("/gridtreelist")
-	public R gridtreelist(){
-		List<SysDept> deptList = sysDeptMapper.selectAll();
-		R r = R.ok().put("count", deptList.size());
-		r.put("data", deptList);
-		r.put("code", 0);
-		r.put("msg", "请求成功");
-		return r;
-	}
+    @RequestMapping("/edit")
+    public ModelAndView edit(Model model, Long deptId) {
+        logger.debug("deptId=" + deptId);
+        ModelAndView mv = new ModelAndView("modules/sys/dept/edit");
+        if (deptId != -1) {
+            DeptVo dept = sysDeptMapper.findById(deptId);
+            model.addAttribute("dept", dept);
+            model.addAttribute("flag", "update");
+        } else {
+            model.addAttribute("dept", new DeptVo());
+            model.addAttribute("flag", "add");
+        }
+        return mv;
+    }
 
-	@RequestMapping("/save")
-	@RequiresPermissions("sys:dept:save")
-	public R save(SysDept dept){
-		if (dept.getId() != null && !dept.getId().equals("")) {
-			sysDeptMapper.updateByPrimaryKey(dept);
-		} else {
-			sysDeptMapper.insert(dept);
-		}
-		return R.ok();
-	}
+    @RequestMapping("/gridtreelist")
+    public R gridtreelist() {
+        List<SysDept> deptList = sysDeptMapper.selectAll();
+        R r = R.ok().put("count", deptList.size());
+        r.put("data", deptList);
+        r.put("code", 0);
+        r.put("msg", "请求成功");
+        return r;
+    }
 
-	@RequestMapping("/delete")
-	@RequiresPermissions("sys:dept:delete")
-	public R delete(SysDept dept){
-		SysDept sysdept = new SysDept();
-		sysdept.setPid(dept.getId());
-		sysDeptMapper.delete(sysdept);
-		sysDeptMapper.delete(dept);
-		return R.ok();
-	}
+    @RequestMapping("/save")
+    @RequiresPermissions("sys:dept:save")
+    public R save(SysDept dept) {
+        if (dept.getId() != null && !dept.getId().equals("")) {
+            sysDeptMapper.updateByPrimaryKey(dept);
+        } else {
+            sysDeptMapper.insert(dept);
+        }
+        return R.ok();
+    }
+
+    @RequestMapping("/delete")
+    @RequiresPermissions("sys:dept:delete")
+    public R delete(SysDept dept) {
+        SysDept sysdept = new SysDept();
+        sysdept.setPid(dept.getId());
+        sysDeptMapper.delete(sysdept);
+        sysDeptMapper.delete(dept);
+        return R.ok();
+    }
 }

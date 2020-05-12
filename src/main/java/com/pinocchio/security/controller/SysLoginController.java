@@ -17,7 +17,6 @@
 package com.pinocchio.security.controller;
 
 
-
 import com.pinocchio.security.model.MenuVo;
 import com.pinocchio.security.model.SysUser;
 import com.pinocchio.security.service.SysMenuService;
@@ -39,7 +38,7 @@ import java.util.List;
 
 /**
  * 登录相关
- * 
+ *
  * @author chenshun
  * @email sunlightcs@gmail.com
  * @date 2016年11月10日 下午1:15:31
@@ -47,78 +46,82 @@ import java.util.List;
 @Controller
 public class SysLoginController {
 
-	@Autowired
-	private SysMenuService sysMenuService;
-	/**
-	 * 登录
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/sys/login", method = RequestMethod.POST)
-	public R login(String username, String password) {
-		try{
-			Subject subject = ShiroUtils.getSubject();
-			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-			subject.login(token);
-		}catch (UnknownAccountException e) {
-			return R.error(e.getMessage());
-		}catch (IncorrectCredentialsException e) {
-			return R.error("账号或密码不正确");
-		}catch (LockedAccountException e) {
-			return R.error("账号已被锁定,请联系管理员");
-		}catch (AuthenticationException e) {
-			return R.error("账户验证失败");
-		}
-	    
-		return R.ok();
-	}
+    @Autowired
+    private SysMenuService sysMenuService;
 
-	/**
-	 * 登录页面
-	 * @return
-	 */
-	@RequestMapping(value = "/login")
-	public String login() {
-		return "login";
-	}
+    /**
+     * 登录
+     */
+    @ResponseBody
+    @RequestMapping(value = "/sys/login", method = RequestMethod.POST)
+    public R login(String username, String password) {
+        try {
+            Subject subject = ShiroUtils.getSubject();
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            subject.login(token);
+        } catch (UnknownAccountException e) {
+            return R.error(e.getMessage());
+        } catch (IncorrectCredentialsException e) {
+            return R.error("账号或密码不正确");
+        } catch (LockedAccountException e) {
+            return R.error("账号已被锁定,请联系管理员");
+        } catch (AuthenticationException e) {
+            return R.error("账户验证失败");
+        }
 
-	/**
-	 * 首页跳转
-	 * @return
-	 */
-	@RequestMapping(value = "/main")
-	public String main() {
-		return "main";
-	}
+        return R.ok();
+    }
 
-	/**
-	 * 退出
-	 */
-	@RequestMapping(value = "logout", method = RequestMethod.GET)
-	public String logout() {
-		ShiroUtils.logout();
-		return "login";
-	}
+    /**
+     * 登录页面
+     *
+     * @return
+     */
+    @RequestMapping(value = "/login")
+    public String login() {
+        return "login";
+    }
 
-	/**
-	 * 首页
-	 * @return
-	 */
-	@RequestMapping(value = "index", method = RequestMethod.GET)
-	public ModelAndView index(Model model,HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("index");
-		SysUser user = (SysUser) request.getSession().getAttribute("sessionUser");
-		model.addAttribute("user", user);
-		mv.addObject(model);
-		return mv;
-	}
+    /**
+     * 首页跳转
+     *
+     * @return
+     */
+    @RequestMapping(value = "/main")
+    public String main() {
+        return "main";
+    }
 
-	@RequestMapping("/menu/MenuList")
-	@ResponseBody
-	public R MenuList(HttpServletRequest request){
+    /**
+     * 退出
+     */
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    public String logout() {
+        ShiroUtils.logout();
+        return "login";
+    }
+
+    /**
+     * 首页
+     *
+     * @return
+     */
+    @RequestMapping(value = "index", method = RequestMethod.GET)
+    public ModelAndView index(Model model, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("index");
+        SysUser user = (SysUser) request.getSession().getAttribute("sessionUser");
+        model.addAttribute("user", user);
+        mv.addObject(model);
+        return mv;
+    }
+
+    @RequestMapping("/menu/MenuList")
+    @ResponseBody
+    public R MenuList(HttpServletRequest request) {
 //		SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
-		SysUser user = (SysUser) request.getSession().getAttribute("sessionUser");
-		System.out.println("user:"+user.getUserId());
-		List<MenuVo> menuList = sysMenuService.getUserMenuList(user.getUserId());
-		return R.ok().put("menuList", menuList);
-	}
+        SysUser user = (SysUser) request.getSession().getAttribute("sessionUser");
+        System.out.println("user:" + user.getUserId());
+        List<MenuVo> menuList = sysMenuService.getUserMenuList(user.getUserId());
+        return R.ok().put("menuList", menuList);
+    }
 }

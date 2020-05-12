@@ -34,8 +34,9 @@ public class SysRoleController {
     private SysUserRoleMapper sysUserRoleMapper;
     @Autowired
     private SysRoleMenuMapper sysRoleMenuMapper;
+
     @RequestMapping("/index")
-    public ModelAndView index(Model model){
+    public ModelAndView index(Model model) {
         ModelAndView mv = new ModelAndView("modules/sys/role/index");
         ShiroTag shiroTag = new ShiroTag();
         model.addAttribute("shiro", shiroTag);
@@ -44,7 +45,7 @@ public class SysRoleController {
     }
 
     @RequestMapping("/listByPage")
-    public R list(SysRole role){
+    public R list(SysRole role) {
 //		PageInfo<ApkVersionUpgrade> pageInfo = apkVersionService.list(request,paramMap);
         PageInfo<SysRole> pageInfo = sysRoleService.pageList(role);
         R r = R.ok().put("count", pageInfo.getTotal());
@@ -55,14 +56,14 @@ public class SysRoleController {
     }
 
     @RequestMapping("/edit")
-    public ModelAndView edit(Model model,Long roleId){
-        logger.debug("roleId="+roleId);
+    public ModelAndView edit(Model model, Long roleId) {
+        logger.debug("roleId=" + roleId);
         ModelAndView mv = new ModelAndView("modules/sys/role/edit");
-        if (roleId != 0){
+        if (roleId != 0) {
             SysRole role = sysRoleMapper.selectByPrimaryKey(roleId);
             model.addAttribute("role", role);
             model.addAttribute("flag", "update");
-        }else{
+        } else {
             model.addAttribute("role", new SysRole());
             model.addAttribute("flag", "add");
         }
@@ -70,8 +71,8 @@ public class SysRoleController {
     }
 
     @RequestMapping("/perm")
-    public ModelAndView perm(Model model,Long roleId){
-        logger.debug("roleId="+roleId);
+    public ModelAndView perm(Model model, Long roleId) {
+        logger.debug("roleId=" + roleId);
         ModelAndView mv = new ModelAndView("modules/sys/role/perm");
         model.addAttribute("roleId", roleId);
         return mv;
@@ -79,7 +80,7 @@ public class SysRoleController {
 
     @RequestMapping("/save")
     @RequiresPermissions("sys:role:save")
-    public R save(SysRole role){
+    public R save(SysRole role) {
         if (role.getRoleId() != null && role.getRoleId().equals("")) {
             sysRoleMapper.updateByPrimaryKey(role);
         } else {
@@ -90,12 +91,12 @@ public class SysRoleController {
     }
 
     @RequestMapping("/saveRoleMenu")
-    public R saveRoleMenu(Long roleId,String menuIds){
+    public R saveRoleMenu(Long roleId, String menuIds) {
         String[] ids = menuIds.split(",");
         SysRoleMenu sysRoleMenu = new SysRoleMenu();
         sysRoleMenu.setRoleId(roleId);
         sysRoleMenuMapper.delete(sysRoleMenu);
-        for (String menuId:ids) {
+        for (String menuId : ids) {
             SysRoleMenu roleMenu = new SysRoleMenu();
             roleMenu.setMenuId(Long.valueOf(menuId));
             roleMenu.setRoleId(roleId);
@@ -106,7 +107,7 @@ public class SysRoleController {
 
     @RequestMapping("/delete")
     @RequiresPermissions("sys:role:delete")
-    public R delete(SysRole role){
+    public R delete(SysRole role) {
         sysRoleMapper.delete(role);
         SysUserRole userRole = new SysUserRole();
         userRole.setRoleId(role.getRoleId());

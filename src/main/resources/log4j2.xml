@@ -17,7 +17,7 @@
         <File name="error" fileName="${displayName}_error.log" append="false">
             <!-- 指定error 级别的日志 -->
             <ThresholdFilter level="ERROR" onMatch="ACCEPT"
-                             onMismatch="DENY" />
+                             onMismatch="DENY"/>
             <PatternLayout>
                 <pattern>${pattern}</pattern>
             </PatternLayout>
@@ -29,7 +29,7 @@
                 <pattern>${pattern}</pattern>
             </PatternLayout>
             <!-- 按大小划分 -->
-            <SizeBasedTriggeringPolicy size="50 MB" />
+            <SizeBasedTriggeringPolicy size="50 MB"/>
         </RollingFile>
     </Appenders>
     <Loggers>
@@ -37,8 +37,8 @@
             /> <Logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN"
             /> <Logger name="org.apache.tomcat.util.net.NioSelectorPool" level="WARN"
             /> -->
-        <Logger name="org.springframework" level="WARN" />
-        <Logger name="com.pinocchio.security" level="DEBUG" />
+        <Logger name="org.springframework" level="WARN"/>
+        <Logger name="com.pinocchio.security" level="DEBUG"/>
         <Logger name="org.apache.kafka" level="OFF"/>
         <Logger name="org.springframework.kafka.listener.KafkaMessageListenerContainer" level="OFF"/>
         <Root level="DEBUG">
@@ -47,10 +47,6 @@
             <AppenderRef ref="rollingFile"></AppenderRef>
         </Root>
     </Loggers>
-
-
-
-
 
 
 </configuration>

@@ -14,14 +14,14 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SecurityApplicationTests {
-	@Autowired
-	private SysUserService userService;
+    @Autowired
+    private SysUserService userService;
 
-	@Test
-	public void contextLoads() {
-		List<UserVo> users = userService.queryUser();
-		System.out.println(users.toString());
-	}
+    @Test
+    public void contextLoads() {
+        List<UserVo> users = userService.queryUser();
+        System.out.println(users.toString());
+    }
 
 }
 

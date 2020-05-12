@@ -7,13 +7,15 @@ import com.pinocchio.security.util.MyMapper;
 
 import java.util.List;
 
-public interface SysDeptMapper extends MyMapper<SysDept>{
+public interface SysDeptMapper extends MyMapper<SysDept> {
 
     /**
      * 根据父部门，查询子部门
+     *
      * @param parentId 父部门ID
      */
     List<DeptVo> queryListParentId(Long parentId);
+
 
     DeptVo findById(Long id);
 }

@@ -6,6 +6,7 @@ import com.pinocchio.security.mapper.SysUserMapper;
 import com.pinocchio.security.model.SysUser;
 import com.pinocchio.security.model.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +18,13 @@ public class SysUserService {
     @Autowired
     private SysUserMapper sysUserMapper;
 
+    @Cacheable(cacheNames = "userList")
     public PageInfo<UserVo> pageList(UserVo user) {
-        Integer pno=user.getPage();
-        Integer pageSize=user.getLimit();
+        System.out.println("没有调用缓存");
+        Integer pno = user.getPage();
+        Integer pageSize = user.getLimit();
         PageHelper.startPage(pno, pageSize);
-        List<UserVo> list =sysUserMapper.queryUser();
+        List<UserVo> list = sysUserMapper.queryUser();
         PageInfo<UserVo> pageInfo = new PageInfo<UserVo>(list);
         return pageInfo;
 
@@ -31,7 +34,8 @@ public class SysUserService {
         return sysUserMapper.selectByPrimaryKey(id);
     }
 
-    public List<UserVo> queryUser(){
+
+    public List<UserVo> queryUser() {
         return sysUserMapper.queryUser();
     }
 }

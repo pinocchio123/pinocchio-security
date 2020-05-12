@@ -1,6 +1,6 @@
 package com.pinocchio.security.model;
 
-public class DeptVo extends SysDept{
+public class DeptVo extends SysDept {
     private String parentName;
 
     public String getParentName() {

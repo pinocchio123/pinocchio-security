@@ -16,8 +16,8 @@ import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
-@EnableKafka
+/*@Configuration
+@EnableKafka*/
 public class KafkaConsumerConfig {
 
     @Value("${kafka.consumer.servers}")
@@ -34,6 +34,7 @@ public class KafkaConsumerConfig {
     private String autoOffsetReset;
     @Value("${kafka.consumer.concurrency}")
     private int concurrency;
+
     @Bean
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();

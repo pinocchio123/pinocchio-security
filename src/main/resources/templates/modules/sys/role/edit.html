@@ -11,12 +11,14 @@
     .downpanel dl dd:hover {
         background-color: inherit;
     }
+
     body {
         height: 100%;
         width: 100%;
         background-size: cover;
         margin: 0 auto;
     }
+
     td {
         font-size: 12px !important;
     }
@@ -24,9 +26,11 @@
     .layui-form-checkbox span {
         height: 30px;
     }
+
     .layui-field-title {
         border-top: 1px solid white;
     }
+
     table {
         width: 100% !important;
     }
@@ -35,19 +39,22 @@
 
 <body>
 <form class="layui-form" action="" style="margin-top: 20px" id="formData">
-    <input type="hidden" name="roleId"  required  lay-verify="required"  th:value="${role.roleId}">
-    <input th:if="${flag == 'update'}" type="hidden" name="createTime"  required  lay-verify="required"  th:value="${role.createTime}">
+    <input type="hidden" name="roleId" required lay-verify="required" th:value="${role.roleId}">
+    <input th:if="${flag == 'update'}" type="hidden" name="createTime" required lay-verify="required"
+           th:value="${role.createTime}">
     <div class="layui-form-item">
         <label class="layui-form-label">角色名</label>
         <div class="layui-input-block">
-            <input type="text" name="roleName"  required  lay-verify="required" placeholder="请输入角色名" autocomplete="off" class="layui-input" style="width: 70%" th:value="${role.roleName}">
+            <input type="text" name="roleName" required lay-verify="required" placeholder="请输入角色名" autocomplete="off"
+                   class="layui-input" style="width: 70%" th:value="${role.roleName}">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">备注</label>
         <div class="layui-input-block">
-            <input type="text" name="remark" required  lay-verify="required" placeholder="请输入备注" autocomplete="off" class="layui-input" style="width: 70%" th:value="${role.remark}">
+            <input type="text" name="remark" required lay-verify="required" placeholder="请输入备注" autocomplete="off"
+                   class="layui-input" style="width: 70%" th:value="${role.remark}">
         </div>
     </div>
 </form>

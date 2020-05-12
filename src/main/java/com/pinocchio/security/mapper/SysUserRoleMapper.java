@@ -6,7 +6,7 @@ import com.pinocchio.security.util.MyMapper;
 import java.util.List;
 
 
-public interface SysUserRoleMapper extends MyMapper<SysUserRole>{
+public interface SysUserRoleMapper extends MyMapper<SysUserRole> {
 
     List<Long> queryRoleIdList(Long userId);
 }

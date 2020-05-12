@@ -3,29 +3,29 @@
 
 <mapper namespace="com.pinocchio.security.mapper.SysMenuMapper">
 
-	<resultMap id="BaseResultMap" type="com.pinocchio.security.model.MenuVo" >
-		<id column="id" property="id" jdbcType="BIGINT" />
-		<result column="pid" property="pid" jdbcType="BIGINT" />
-		<result column="name" property="name" jdbcType="VARCHAR" />
-		<result column="url" property="url" jdbcType="VARCHAR" />
-		<result column="perms" property="perms" jdbcType="VARCHAR" />
-		<result column="type" property="type" jdbcType="INTEGER" />
-		<result column="icon" property="icon" jdbcType="VARCHAR" />
-		<result column="order_num" property="orderNum" jdbcType="INTEGER" />
-		<result column="parent_name" property="parentName" jdbcType="VARCHAR" />
-	</resultMap>
+    <resultMap id="BaseResultMap" type="com.pinocchio.security.model.MenuVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="pid" property="pid" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="perms" property="perms" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+        <result column="order_num" property="orderNum" jdbcType="INTEGER"/>
+        <result column="parent_name" property="parentName" jdbcType="VARCHAR"/>
+    </resultMap>
 
-	<select id="queryListParentId" resultMap="BaseResultMap">
-		select * from sys_menu where pid = #{pid} order by order_num asc
-	</select>
-	
-	<select id="queryNotButtonList" resultMap="BaseResultMap">
-		select * from sys_menu where type != 2 order by order_num asc 
-	</select>
+    <select id="queryListParentId" resultMap="BaseResultMap">
+        select * from sys_menu where pid = #{pid} order by order_num asc
+    </select>
 
-	<select id="findById" resultMap="BaseResultMap">
-		select n.id,n.pid,n.name,n.url,n.perms,n.type,m.name AS parent_name from sys_menu n
-		LEFT JOIN sys_menu m ON n.pid = m.id
-		where n.id = #{id}
-	</select>
+    <select id="queryNotButtonList" resultMap="BaseResultMap">
+        select * from sys_menu where type != 2 order by order_num asc
+    </select>
+
+    <select id="findById" resultMap="BaseResultMap">
+        select n.id,n.pid,n.name,n.url,n.perms,n.type,m.name AS parent_name from sys_menu n
+        LEFT JOIN sys_menu m ON n.pid = m.id
+        where n.id = #{id}
+    </select>
 </mapper>

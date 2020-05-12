@@ -7,11 +7,11 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
 @MapperScan(basePackages = "com.pinocchio.security.mapper")
-public class SecurityApplication{
+public class SecurityApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SecurityApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SecurityApplication.class, args);
+    }
 
 }
 

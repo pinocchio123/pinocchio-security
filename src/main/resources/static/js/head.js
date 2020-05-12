@@ -2,46 +2,46 @@
  * 菜单
  * */
 //获取路径uri
-var pathUri=window.location.href;
+var pathUri = window.location.href;
 
 // console.log("pathUrl:"+pathUri);
-$(function(){
-    layui.use('element', function(){
+$(function () {
+    layui.use('element', function () {
         var element = layui.element;
         // 左侧导航区域（可配合layui已有的垂直导航）
-        $.get("/auth/getUserPerms",function(data){
-            if(data!=null){
+        $.get("/auth/getUserPerms", function (data) {
+            if (data != null) {
                 getMenus(data);
                 element.render('nav');
-            }else{
-                layer.alert("权限不足，请联系管理员",function () {
+            } else {
+                layer.alert("权限不足，请联系管理员", function () {
                     //退出
-                    window.location.href="/logout";
+                    window.location.href = "/logout";
                 });
             }
         });
     });
 })
-var getMenus=function(data){
+var getMenus = function (data) {
     //回显选中
-    var ul=$("<ul class='layui-nav layui-nav-tree' lay-filter='test'></ul>");
-    for(var i=0;i < data.length;i++){
-        var node=data[i];
-        if( node.istype==0){
-            if(node.pId==0){
-                var li=$("<li class='layui-nav-item' flag='"+node.id+"'></li>");
+    var ul = $("<ul class='layui-nav layui-nav-tree' lay-filter='test'></ul>");
+    for (var i = 0; i < data.length; i++) {
+        var node = data[i];
+        if (node.istype == 0) {
+            if (node.pId == 0) {
+                var li = $("<li class='layui-nav-item' flag='" + node.id + "'></li>");
                 //父级无page
-                var a=$("<a class='' href='javascript:;'>"+node.name+"</a>");
+                var a = $("<a class='' href='javascript:;'>" + node.name + "</a>");
                 li.append(a);
                 //获取子节点
                 var childArry = getParentArry(node.id, data);
-                if(childArry.length>0){
+                if (childArry.length > 0) {
                     a.append("<span class='layui-nav-more'></span>");
-                    var dl=$("<dl class='layui-nav-child'></dl>");
+                    var dl = $("<dl class='layui-nav-child'></dl>");
                     for (var y in childArry) {
-                        var dd=$("<dd><a href='"+childArry[y].page+"'>"+childArry[y].name+"</a></dd>");
+                        var dd = $("<dd><a href='" + childArry[y].page + "'>" + childArry[y].name + "</a></dd>");
                         //判断选中状态
-                        if(pathUri.indexOf(childArry[y].page)>0){
+                        if (pathUri.indexOf(childArry[y].page) > 0) {
                             li.addClass("layui-nav-itemed");
                             dd.addClass("layui-this")
                         }
@@ -67,14 +67,15 @@ function getParentArry(id, arry) {
     }
     return newArry;
 }
-function updateUsePwd(){
+
+function updateUsePwd() {
     layer.open({
-        type:1,
+        type: 1,
         title: "修改密码",
-        fixed:false,
-        resize :false,
+        fixed: false,
+        resize: false,
         shadeClose: true,
         area: ['450px'],
-        content:$('#useDetail')
+        content: $('#useDetail')
     });
 }

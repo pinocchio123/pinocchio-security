@@ -4,5 +4,5 @@ import com.pinocchio.security.model.SysRole;
 import com.pinocchio.security.util.MyMapper;
 
 
-public interface SysRoleMapper extends MyMapper<SysRole>{
+public interface SysRoleMapper extends MyMapper<SysRole> {
 }

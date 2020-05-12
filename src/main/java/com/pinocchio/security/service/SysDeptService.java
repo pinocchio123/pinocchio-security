@@ -15,11 +15,11 @@ import java.util.List;
 public class SysDeptService {
 
     @Autowired
-    private SysDeptMapper  sysDeptMapper;
+    private SysDeptMapper sysDeptMapper;
 
-    public List<DeptVo> getAllDeptList(){
+    public List<DeptVo> getAllDeptList() {
         //查询根部门列表
-        List<DeptVo> deptList = queryListParentId(new Long(-1) );
+        List<DeptVo> deptList = queryListParentId(new Long(-1));
         //递归获取子部门
         getDeptTreeList(deptList);
 
@@ -31,10 +31,10 @@ public class SysDeptService {
         return deptList;
     }
 
-    public List<DeptVo> getDeptTreeList(List<DeptVo> deptList){
+    public List<DeptVo> getDeptTreeList(List<DeptVo> deptList) {
         List<DeptVo> subDeptList = new ArrayList<DeptVo>();
 
-        for(DeptVo entity : deptList){
+        for (DeptVo entity : deptList) {
             List<DeptVo> childListDept = new ArrayList<DeptVo>();
             childListDept = queryListParentId(entity.getId());
             entity.setChildren(getDeptTreeList(childListDept));

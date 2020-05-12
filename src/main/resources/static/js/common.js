@@ -8,12 +8,12 @@
  * 然后自动执行 onclick 事件，如果不是的话就用JS 跳转。这样在处理页面就可以得到 HTTP_REFERER
  * @param url
  */
-function referURL(url){
-    var isIe=(document.all)?true:false;
+function referURL(url) {
+    var isIe = (document.all) ? true : false;
     //console.info("isIe:"+isIe);
-    if(isIe) {
+    if (isIe) {
         var linka = document.createElement('a');
-        linka.href=url;
+        linka.href = url;
         document.body.appendChild(linka);
         linka.click();
     }
@@ -30,7 +30,7 @@ function generateUUID(len, radix) {
 
     if (len) {
         // Compact form
-        for (i = 0; i < len; i++) uuid[i] = chars[0 | (Math.random()*radix)];
+        for (i = 0; i < len; i++) uuid[i] = chars[0 | (Math.random() * radix)];
     } else {
         // rfc4122, version 4 form
         var r;
@@ -43,7 +43,7 @@ function generateUUID(len, radix) {
         // per rfc4122, sec. 4.1.5
         for (i = 0; i < 36; i++) {
             if (!uuid[i]) {
-                r = 0 | (Math.random()*16);
+                r = 0 | (Math.random() * 16);
                 uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
             }
         }
@@ -60,9 +60,9 @@ function generateUUID(len, radix) {
 function uuid() {
     var d = new Date().getTime();
     //var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var uuid = 'xxxx-yxxx'.replace(/[xy]/g, function(c) {
-        var r = (d + Math.random()*16)%16 | 0;
-        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    var uuid = 'xxxx-yxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
     return uuid;
 };
@@ -71,24 +71,24 @@ function uuid() {
 //usage: someVar.formatMoney(decimalPlaces, symbol, thousandsSeparator, decimalSeparator)
 //defaults: (2, "$", ",", ".")
 Number.prototype.formatMoney = function (places, symbol, thousand, decimal) {
- places = !isNaN(places = Math.abs(places)) ? places : 2;
- symbol = symbol !== undefined ? symbol : "$";
- thousand = thousand || ",";
- decimal = decimal || ".";
- var number = this,
-     negative = number < 0 ? "-" : "",
-     i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
-     j = (j = i.length) > 3 ? j % 3 : 0;
- return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
+    places = !isNaN(places = Math.abs(places)) ? places : 2;
+    symbol = symbol !== undefined ? symbol : "$";
+    thousand = thousand || ",";
+    decimal = decimal || ".";
+    var number = this,
+        negative = number < 0 ? "-" : "",
+        i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
+        j = (j = i.length) > 3 ? j % 3 : 0;
+    return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
 };
 
 /**
  * 判断是否登录，没登录刷新当前页，促使Shiro拦截后跳转登录页
- * @param result	ajax请求返回的值
+ * @param result    ajax请求返回的值
  * @returns {如果没登录，刷新当前页}
  */
-function isLogin(result){
-    if(result && result.code && (result.code == '1101' || result.code=='1102')){
+function isLogin(result) {
+    if (result && result.code && (result.code == '1101' || result.code == '1102')) {
         window.location.reload(true);//刷新当前页
     }
     return true;//返回true
@@ -99,29 +99,30 @@ function isLogin(result){
  * @param name
  * @returns
  */
-function GetQueryString(name){
-    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-    var search=window.location.search;
-    if(search!=null && search!=""){
+function GetQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var search = window.location.search;
+    if (search != null && search != "") {
         var r = search.substr(1).match(reg);
-        if(r!=null){
-            return  unescape(r[2]);
+        if (r != null) {
+            return unescape(r[2]);
         }
         return null;
     }
-        }
+}
+
 /**
  * 获取菜单uri
  * @returns
  */
-function getCallback(){
+function getCallback() {
     var pathname = window.location.pathname;
-    var param=GetQueryString("callback");
+    var param = GetQueryString("callback");
     //console.log("pathname:"+pathname);
     //console.log("param:"+param);
-    if(param!=null && param != ""){
+    if (param != null && param != "") {
         return param;
-    }else{
+    } else {
         return pathname;
     }
 }
@@ -132,16 +133,16 @@ function getCallback(){
  * @param result
  * @returns {Boolean}
  */
-function isError(result){
-    var flag=true;
-    if(result && result.status){
-        flag=false;
-        if(result.status == '-1' || result.status=='-101' || result.status=='400' || result.status=='404' || result.status=='500'){
+function isError(result) {
+    var flag = true;
+    if (result && result.status) {
+        flag = false;
+        if (result.status == '-1' || result.status == '-101' || result.status == '400' || result.status == '404' || result.status == '500') {
             layer.alert(result.data);
-        }else if(result.status=='403'){
-            layer.alert(result.data,function(){
+        } else if (result.status == '403') {
+            layer.alert(result.data, function () {
                 //跳转到未授权界面
-                window.location.href="/403";
+                window.location.href = "/403";
             });
         }
     }

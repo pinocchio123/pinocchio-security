@@ -2,44 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.pinocchio.security.mapper.SysUserMapper">
-	<resultMap id="BaseResultMap" type="com.pinocchio.security.model.UserVo" >
-		<id column="user_id" property="userId" jdbcType="BIGINT" />
-		<result column="username" property="username" jdbcType="VARCHAR" />
-		<result column="password" property="password" jdbcType="VARCHAR" />
-		<result column="salt" property="salt" jdbcType="VARCHAR" />
-		<result column="email" property="email" jdbcType="VARCHAR" />
-		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
-		<result column="status" property="status" jdbcType="TINYINT" />
-		<result column="dept_id" property="deptId" jdbcType="BIGINT" />
-		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-		<result column="dept_name" property="deptName" jdbcType="VARCHAR"></result>
-	</resultMap>
+    <resultMap id="BaseResultMap" type="com.pinocchio.security.model.UserVo">
+        <id column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="dept_id" property="deptId" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"></result>
+    </resultMap>
 
-	<!--  查询用户添加部门名称  -->
-	<select id="queryUser" resultMap="BaseResultMap">
-		SELECT m.user_id,m.username,m.password,m.salt,m.email,m.mobile,m.status,m.dept_id,m.create_time,n.name as dept_name from sys_user m
-			LEFT JOIN sys_dept n ON m.dept_id = n.id
-	</select>
+    <!--  查询用户添加部门名称  -->
+    <select id="queryUser" resultMap="BaseResultMap">
+        SELECT m.user_id,m.username,m.password,m.salt,m.email,m.mobile,m.status,m.dept_id,m.create_time,n.name as
+        dept_name from sys_user m
+        LEFT JOIN sys_dept n ON m.dept_id = n.id
+    </select>
 
-	<select id="queryUserOne" resultMap="BaseResultMap">
-		SELECT m.user_id,m.username,m.password,m.salt,m.email,m.mobile,m.status,m.dept_id,m.create_time,n.name as dept_name from sys_user m
-		LEFT JOIN sys_dept n ON m.dept_id = n.id
-		WHERE m.user_id = #{userId}
-	</select>
+    <select id="queryUserOne" resultMap="BaseResultMap">
+        SELECT m.user_id,m.username,m.password,m.salt,m.email,m.mobile,m.status,m.dept_id,m.create_time,n.name as
+        dept_name from sys_user m
+        LEFT JOIN sys_dept n ON m.dept_id = n.id
+        WHERE m.user_id = #{userId}
+    </select>
 
-	<!-- 查询用户的所有权限 -->
-	<select id="queryAllPerms" resultType="string">
-		select m.perms from sys_user_role ur 
-			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
-			LEFT JOIN sys_menu m on rm.menu_id = m.id
-		where ur.user_id = #{userId}
-	</select>
-	
-	<!-- 查询用户的所有菜单ID --> 
-	<select id="queryAllMenuId" resultType="long">
-		select distinct rm.menu_id from sys_user_role ur 
-			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
-		where ur.user_id = #{userId}
-	</select>
+    <!-- 查询用户的所有权限 -->
+    <select id="queryAllPerms" resultType="string">
+        select m.perms from sys_user_role ur
+        LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id
+        LEFT JOIN sys_menu m on rm.menu_id = m.id
+        where ur.user_id = #{userId}
+    </select>
+
+    <!-- 查询用户的所有菜单ID -->
+    <select id="queryAllMenuId" resultType="long">
+        select distinct rm.menu_id from sys_user_role ur
+        LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id
+        where ur.user_id = #{userId}
+    </select>
 
 </mapper>

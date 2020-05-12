@@ -15,10 +15,10 @@ public class SysRoleService {
     private SysRoleMapper sysRoleMapper;
 
     public PageInfo<SysRole> pageList(SysRole role) {
-        Integer pno=role.getPage();
-        Integer pageSize=role.getLimit();
+        Integer pno = role.getPage();
+        Integer pageSize = role.getLimit();
         PageHelper.startPage(pno, pageSize);
-        List<SysRole> list =sysRoleMapper.selectAll();
+        List<SysRole> list = sysRoleMapper.selectAll();
         PageInfo<SysRole> pageInfo = new PageInfo<SysRole>(list);
         return pageInfo;
 
